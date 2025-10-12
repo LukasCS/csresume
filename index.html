@@ -337,23 +337,23 @@
                         </div>
                     </div>
                 </div>
-               <form class="contact-form" id="contactForm" action="https://formspree.io/f/xpwyowrw" method="POST">
-                    <div class="form-group">
-                        <input type="text" id="name" name="name" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" placeholder="Your Email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="subject" name="subject" placeholder="Subject" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-submit">
-                        <span>Send Message</span>
-                    </button>
-                </form>
+              <form class="contact-form" id="contactForm">
+    <div class="form-group">
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
+    </div>
+    <div class="form-group">
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+    </div>
+    <div class="form-group">
+        <input type="text" id="subject" name="subject" placeholder="Subject" required>
+    </div>
+    <div class="form-group">
+        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary btn-submit">
+        <span>Send Message</span>
+    </button>
+</form>
             </div>
         </div>
     </section>
@@ -366,5 +366,31 @@
     </footer>
 
     <script src="script.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+    emailjs.init("Y70HpC_nKq9dsFibv"); // Paste your User ID here
+
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Stops redirect
+
+        // Basic validation
+        if (!this.checkValidity()) {
+            alert('Please fill all fields!');
+            return;
+        }
+
+        emailjs.send('service_7g530nn', 'template_9dzqvho', { // Paste your IDs
+            from_name: document.getElementById('name').value,
+            from_email: document.getElementById('email').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        }).then(function() {
+            alert('Message sent successfully!'); // Customize as needed
+            document.getElementById('contactForm').reset(); // Clears fields
+        }, function(error) {
+            alert('Failed to send: ' + error.text);
+        });
+    });
+</script>
 </body>
 </html>
