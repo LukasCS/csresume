@@ -370,27 +370,33 @@
     <script type="text/javascript">
     emailjs.init("Y70HpC_nKq9dsFibv"); // Paste your User ID here
 
-    document.getElementById('contactForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Stops redirect
+   document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-        // Basic validation
-        if (!this.checkValidity()) {
-            alert('Please fill all fields!');
-            return;
-        }
+    if (!this.checkValidity()) {
+        alert('Please fill all fields!');
+        return;
+    }
 
-        emailjs.send('service_7g530nn', 'template_6wgfkoo', { // Paste your IDs
-            from_name: document.getElementById('name').value,
-            from_email: document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value
-        }).then(function() {
-            alert('Message sent successfully!'); // Customize as needed
-            document.getElementById('contactForm').reset(); // Clears fields
+    const params = {
+        from_name: document.getElementById('name').value,
+        from_email: document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value
+    };
+
+    console.log('Sending with params:', params); // Add this for debugging
+
+    emailjs.send('service_7g530nn', 'template_6wgfkoo', params)
+        .then(function(response) {
+            console.log('SUCCESS!', response); // Log full response
+            alert('Message sent successfully!');
+            document.getElementById('contactForm').reset();
         }, function(error) {
+            console.log('FAILED...', error); // Log full error
             alert('Failed to send: ' + error.text);
         });
-    });
+});
 </script>
 </body>
 </html>
